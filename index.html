@@ -157,6 +157,8 @@
       text-align: center;
     }
 
+    .zoom-img { cursor: zoom-in; }
+
     /* === 封底 === */
     .end-slide { text-align: center; }
     .end-slide .big { font-size: 3em; margin-bottom: 0.2em; color: var(--gold); }
@@ -229,9 +231,9 @@
     <section>
       <h2>聖誕、復活聚餐</h2>
       <div class="photo-grid cols-3">
-        <img src="images/feast-1.jpg" style="width:100%;height:320px;object-fit:cover;border-radius:12px;">
-        <img src="images/feast-2.jpg" style="width:100%;height:320px;object-fit:cover;border-radius:12px;">
-        <img src="images/feast-3.jpg" style="width:100%;height:320px;object-fit:cover;border-radius:12px;">
+        <img class="zoom-img" src="images/feast-1.jpg" style="width:100%;height:320px;object-fit:cover;border-radius:12px;">
+        <img class="zoom-img" src="images/feast-2.jpg" style="width:100%;height:320px;object-fit:cover;border-radius:12px;">
+        <img class="zoom-img" src="images/feast-3.jpg" style="width:100%;height:320px;object-fit:cover;border-radius:12px;">
       </div>
     </section>
 
@@ -371,6 +373,12 @@
   </div>
 </div>
 
+<!-- 燈箱 -->
+<div id="lightbox" style="position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.9);cursor:zoom-out;">
+  <img id="lightbox-img" style="max-width:88vw;max-height:88vh;border-radius:12px;box-shadow:0 0 60px rgba(0,0,0,0.8);">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
 <script>
   Reveal.initialize({
@@ -383,6 +391,26 @@
     controls: true,
     slideNumber: 'c/t',
     plugins: []
+  });
+
+  // 點擊放大圖片（GSAP 燈箱）
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightbox-img');
+  document.querySelectorAll('.zoom-img').forEach(img => {
+    img.addEventListener('click', () => {
+      lbImg.src = img.src;
+      lb.style.display = 'flex';
+      gsap.fromTo(lb, { opacity: 0 }, { opacity: 1, duration: 0.25 });
+      gsap.fromTo(lbImg, { scale: 0.7, y: 30 }, { scale: 1, y: 0, duration: 0.45, ease: 'power3.out' });
+    });
+  });
+  lb.addEventListener('click', () => {
+    gsap.to(lb, { opacity: 0, duration: 0.2, onComplete: () => lb.style.display = 'none' });
+  });
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && lb.style.display === 'flex') {
+      gsap.to(lb, { opacity: 0, duration: 0.2, onComplete: () => lb.style.display = 'none' });
+    }
   });
 </script>
 
