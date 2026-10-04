@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2026 輔祭會週年大會</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
+  <style>
+    :root {
+      --accent:  #e8643a;
+      --accent2: #4fc3f7;
+      --success: #81c784;
+      --warn:    #ffb74d;
+      --gold:    #ffd54f;
+    }
+
+    .reveal { font-family: 'Segoe UI', 'Noto Sans TC', sans-serif; }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .reveal h1 { font-size: 2.2em; }
+    .reveal h2 { font-size: 1.5em; color: var(--accent2); }
+    .reveal .progress { color: var(--accent); }
+
+    /* === CSS 底圖（燭光暖光風格，取代 AI 生成底圖）=== */
+    .bg-candle {
+      background:
+        radial-gradient(ellipse 60% 45% at 50% 88%, rgba(232,100,58,0.28), transparent 65%),
+        radial-gradient(ellipse 40% 35% at 82% 12%, rgba(255,213,79,0.12), transparent 70%),
+        radial-gradient(ellipse 45% 40% at 12% 20%, rgba(79,195,247,0.10), transparent 70%),
+        linear-gradient(160deg, #0d1117 0%, #1a1a2e 100%);
+    }
+    .bg-soft {
+      background:
+        radial-gradient(ellipse 55% 40% at 50% 110%, rgba(232,100,58,0.14), transparent 70%),
+        radial-gradient(ellipse 35% 30% at 88% 8%, rgba(79,195,247,0.07), transparent 70%),
+        linear-gradient(160deg, #0d1117 0%, #1a1a2e 100%);
+    }
+    .glow-line {
+      width: 90px; height: 3px; margin: 0.7em auto;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      border-radius: 2px;
+      box-shadow: 0 0 14px rgba(255,213,79,0.55);
+    }
+
+    /* === 封面 === */
+    .title-slide { text-align: center; }
+    .title-slide .tag {
+      display: inline-block;
+      background: rgba(232,100,58,0.9);
+      color: #fff;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.55em;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.8em;
+      font-weight: 600;
+    }
+    .title-slide .subtitle { font-size: 0.75em; color: #aaa; margin-top: 0.5em; }
+    .title-slide .author   { margin-top: 2em; font-size: 0.5em; color: #888; }
+
+    /* === 大標題頁（歡迎／宣布）=== */
+    .hero-slide { text-align: center; }
+    .hero-slide .hero-sub {
+      font-size: 0.7em; color: var(--accent2);
+      letter-spacing: 0.15em; margin-bottom: 0.6em; font-weight: 600;
+    }
+    .hero-slide h1 {
+      font-size: 2.4em;
+      background: linear-gradient(90deg, #fff 30%, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-slide .hero-note { font-size: 0.55em; color: #999; margin-top: 1.2em; }
+
+    /* === 名牌卡 === */
+    .name-row { display: flex; gap: 24px; justify-content: center; margin-top: 1em; }
+    .name-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,213,79,0.35);
+      border-radius: 14px;
+      padding: 30px 46px;
+      text-align: center;
+      box-shadow: 0 0 24px rgba(255,213,79,0.08);
+    }
+    .name-card .nc-name { font-size: 1.1em; font-weight: 700; color: var(--gold); }
+    .name-card .nc-role { font-size: 0.45em; color: #bbb; margin-top: 8px; }
+
+    /* === 章節轉場 === */
+    .section-slide { text-align: center; }
+    .section-slide .sec-num {
+      font-size: 0.5em; color: var(--accent);
+      letter-spacing: 0.3em; font-weight: 700; margin-bottom: 0.8em;
+    }
+    .section-slide h1 { font-size: 2.6em; color: #fff; }
+
+    /* === 照片預留位 === */
+    .photo-grid { display: grid; gap: 16px; margin-top: 0.6em; }
+    .photo-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .photo-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+    .photo-ph {
+      border: 2px dashed rgba(255,255,255,0.25);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      height: 320px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.35);
+      font-size: 0.45em;
+      gap: 10px;
+    }
+    .photo-ph .ph-icon { font-size: 2em; opacity: 0.6; }
+    .photo-ph.single { height: 430px; font-size: 0.55em; }
+
+    /* === 三層次卡（輔祭的職務）=== */
+    .lvl-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 0.8em; }
+    .lvl-card {
+      background: rgba(255,255,255,0.05);
+      border-top: 4px solid var(--accent2);
+      border-radius: 12px;
+      padding: 22px 18px;
+      text-align: center;
+    }
+    .lvl-card:nth-child(2) { border-top-color: var(--gold); }
+    .lvl-card:nth-child(3) { border-top-color: var(--accent); }
+    .lvl-card .lvl-icon { margin-bottom: 12px; }
+    .lvl-card .lvl-icon svg {
+      width: 72px; height: 72px;
+      filter: drop-shadow(0 0 12px rgba(79,195,247,0.55));
+    }
+    .lvl-card:nth-child(2) .lvl-icon svg { filter: drop-shadow(0 0 12px rgba(255,213,79,0.55)); }
+    .lvl-card:nth-child(3) .lvl-icon svg { filter: drop-shadow(0 0 12px rgba(232,100,58,0.55)); }
+    .lvl-card .lvl-num {
+      font-size: 0.4em; color: #888; letter-spacing: 0.2em; margin-bottom: 6px;
+    }
+    .lvl-card .lvl-title { font-size: 0.62em; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .lvl-card .lvl-desc  { font-size: 0.42em; color: #bbb; line-height: 1.7; }
+
+    /* === 列表頁 === */
+    .pt-list { list-style: none; padding: 0; margin: 0.8em 0 0; font-size: 0.6em; color: #ccc; }
+    .pt-list li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .pt-list li:last-child { border-bottom: none; }
+    .pt-list li::before { content: "✦ "; color: var(--accent2); opacity: 0.7; }
+
+    .note-box {
+      border: 2px dashed rgba(255,255,255,0.2);
+      border-radius: 10px;
+      padding: 22px;
+      margin-top: 0.8em;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.5em;
+      text-align: center;
+    }
+
+    /* === 封底 === */
+    .end-slide { text-align: center; }
+    .end-slide .big { font-size: 3em; margin-bottom: 0.2em; color: var(--gold); }
+    .end-slide .tagline { font-size: 0.65em; color: #aaa; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 1 封面 -->
+    <section class="bg-candle" data-background-transition="fade">
+      <div class="title-slide">
+        <div class="tag">2026 年 10 月 4 日</div>
+        <h1>輔祭會週年大會</h1>
+        <div class="glow-line"></div>
+        <p class="subtitle">回顧・感恩・傳承</p>
+        <p class="author">Altar Servers' Annual General Meeting 2026</p>
+      </div>
+    </section>
+
+    <!-- 2 歡迎新任神師 -->
+    <section class="bg-soft">
+      <div class="hero-slide">
+        <p class="hero-sub">WELCOME · 新任神師</p>
+        <h1>歡迎蔡濛濛神父</h1>
+        <div class="glow-line"></div>
+        <p class="hero-note">讓我們以熱烈的掌聲歡迎</p>
+      </div>
+    </section>
+
+    <!-- 3 歡迎新會員 -->
+    <section class="bg-soft">
+      <div class="hero-slide">
+        <p class="hero-sub">WELCOME · 新會員</p>
+        <h1>歡迎新會員</h1>
+        <div class="name-row">
+          <div class="name-card">
+            <div class="nc-name">陳善柔</div>
+            <div class="nc-role">新會員</div>
+          </div>
+          <div class="name-card">
+            <div class="nc-name">鍾懿</div>
+            <div class="nc-role">新會員</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 神師分享 -->
+    <section class="bg-soft">
+      <div class="hero-slide">
+        <p class="hero-sub">SHARING · 神師分享</p>
+        <h1>神師分享</h1>
+        <div class="glow-line"></div>
+      </div>
+    </section>
+
+    <!-- 5 活動回顧（章節轉場）-->
+    <section class="bg-candle">
+      <div class="section-slide">
+        <p class="sec-num">— PART 1 —</p>
+        <h1>活動回顧</h1>
+        <div class="glow-line"></div>
+        <p class="hero-note" style="font-size:0.55em;color:#aaa;">聖誕聚餐 · 復活聚餐 · 新春團拜 · 主保瞻禮 · 暑期宿營</p>
+      </div>
+    </section>
+
+    <!-- 6 聖誕、復活聚餐 -->
+    <section>
+      <h2>聖誕、復活聚餐</h2>
+      <div class="photo-grid cols-3">
+        <div class="photo-ph"><span class="ph-icon">🖼️</span>活動照片</div>
+        <div class="photo-ph"><span class="ph-icon">🖼️</span>活動照片</div>
+        <div class="photo-ph"><span class="ph-icon">🖼️</span>活動照片</div>
+      </div>
+    </section>
+
+    <!-- 7 新春團拜 -->
+    <section>
+      <h2>新春團拜</h2>
+      <div class="photo-grid cols-2">
+        <div class="photo-ph"><span class="ph-icon">🖼️</span>活動照片</div>
+        <div class="photo-ph"><span class="ph-icon">🖼️</span>活動照片</div>
+      </div>
+    </section>
+
+    <!-- 8 主保瞻禮 -->
+    <section>
+      <h2>主保瞻禮</h2>
+      <div class="photo-grid cols-2">
+        <div class="photo-ph"><span class="ph-icon">🖼️</span>活動照片</div>
+        <div class="photo-ph"><span class="ph-icon">🖼️</span>活動照片</div>
+      </div>
+    </section>
+
+    <!-- 9 暑期宿營 -->
+    <section>
+      <h2>暑期宿營</h2>
+      <div class="photo-grid cols-2">
+        <div class="photo-ph"><span class="ph-icon">🖼️</span>活動照片</div>
+        <div class="photo-ph"><span class="ph-icon">🖼️</span>活動照片</div>
+      </div>
+    </section>
+
+    <!-- 10 財政報告 -->
+    <section class="bg-soft">
+      <div class="hero-slide">
+        <p class="hero-sub">REPORT · 財政狀況</p>
+        <h1>財政報告</h1>
+        <div class="glow-line"></div>
+        <div class="note-box">（收支摘要表格位置）</div>
+      </div>
+    </section>
+
+    <!-- 11 事項宣布及會務 -->
+    <section class="bg-soft">
+      <div class="hero-slide">
+        <p class="hero-sub">ANNOUNCEMENT · 會務</p>
+        <h1>事項宣布及會務</h1>
+        <div class="glow-line"></div>
+      </div>
+    </section>
+
+    <!-- 12 禮儀短講（章節轉場）-->
+    <section class="bg-candle">
+      <div class="section-slide">
+        <p class="sec-num">— PART 2 —</p>
+        <h1>禮儀短講</h1>
+        <div class="glow-line"></div>
+        <ul class="pt-list" style="text-align:left;max-width:560px;margin-left:auto;margin-right:auto;font-size:0.5em;">
+          <li>輔祭的職務 —— 不只輔祭</li>
+          <li>正確處理掉在地上的聖體聖血</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 13 輔祭的職務 - 不只輔祭 -->
+    <section>
+      <h2 style="text-align:center;">輔祭的職務 —— 不只輔祭</h2>
+      <div class="lvl-grid">
+        <div class="lvl-card">
+          <div class="lvl-icon">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M32 54C18 44 8 34 8 22 8 13 15 8 22 8c4 0 8 2 10 5 2-3 6-5 10-5 7 0 14 5 14 14 0 12-10 22-24 32z"
+                    stroke="#4fc3f7" stroke-width="3" fill="rgba(79,195,247,0.15)"/>
+              <circle cx="32" cy="26" r="7" stroke="#4fc3f7" stroke-width="2.5" fill="none"/>
+              <circle cx="32" cy="26" r="2" fill="#4fc3f7"/>
+            </svg>
+          </div>
+          <div class="lvl-num">層次一</div>
+          <div class="lvl-title">修身・親近天主</div>
+          <div class="lvl-desc">以祈禱與善行修養自己，在服務中與天主親近</div>
+        </div>
+        <div class="lvl-card">
+          <div class="lvl-icon">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 12h24v10c0 4-2 7-5 8v14a4 4 0 0 1-4 4h-6a4 4 0 0 1-4-4V30c-3-1-5-4-5-8V12z"
+                    stroke="#ffd54f" stroke-width="3" fill="rgba(255,213,79,0.15)"/>
+              <path d="M20 14h24M28 44h8M26 52h12" stroke="#ffd54f" stroke-width="2.5"/>
+              <path d="M32 30v8" stroke="#ffd54f" stroke-width="2.5"/>
+            </svg>
+          </div>
+          <div class="lvl-num">層次二</div>
+          <div class="lvl-title">清楚禮儀意義</div>
+          <div class="lvl-desc">比任何人更清楚禮儀的意義——並要從行為表現出來</div>
+        </div>
+        <div class="lvl-card">
+          <div class="lvl-icon">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 40c4-8 10-12 18-12s14 4 18 12" stroke="#e8643a" stroke-width="3" fill="none"/>
+              <path d="M32 28V10M32 10l-6 6M32 10l6 6" stroke="#e8643a" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <circle cx="14" cy="46" r="4" stroke="#e8643a" stroke-width="2.5" fill="rgba(232,100,58,0.15)"/>
+              <circle cx="32" cy="50" r="4" stroke="#e8643a" stroke-width="2.5" fill="rgba(232,100,58,0.15)"/>
+              <circle cx="50" cy="46" r="4" stroke="#e8643a" stroke-width="2.5" fill="rgba(232,100,58,0.15)"/>
+            </svg>
+          </div>
+          <div class="lvl-num">層次三</div>
+          <div class="lvl-title">帶領・傳承</div>
+          <div class="lvl-desc">肩負福傳責任，帶領後進、傳承使命，修德成聖</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14 正確處理掉在地上的聖體聖血 -->
+    <section class="bg-soft">
+      <div class="hero-slide">
+        <p class="hero-sub">SHORT TALK · 禮儀短講</p>
+        <h1>正確處理掉在地上的聖體聖血</h1>
+        <div class="glow-line"></div>
+      </div>
+    </section>
+
+    <!-- 15 本會發展討論及建議 -->
+    <section>
+      <h2>本會發展討論及建議</h2>
+      <div class="note-box" style="height:340px;display:flex;align-items:center;justify-content:center;font-size:0.55em;">
+        討論及建議內容位置<br>（現場收集大家意見）
+      </div>
+    </section>
+
+    <!-- 16 完 -->
+    <section class="bg-candle">
+      <div class="end-slide">
+        <div class="big">✝</div>
+        <h1>多謝各位</h1>
+        <div class="glow-line"></div>
+        <p class="tagline">2026 輔祭會週年大會 · 2026年10月4日</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    plugins: []
+  });
+</script>
+
+</body>
+</html>
